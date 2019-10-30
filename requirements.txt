@@ -1,0 +1,3 @@
+rpi_ws281x==4.2.2
+rpi_7segment==0.0.1
+git+git://github.com/gwtwod/py3humiocore.git@releases/tag/0.3.0#egg=humiocore
