@@ -13,8 +13,8 @@ class HumioClient:
     def _fetch_result(self, query, span):
         client = humiocore.HumioAPI(token=self.env_config['token'], base_url=self.env_config['base_url'])
 
-        start = humiocore.utils.parse_ts(f'{span}@m')
-        end = humiocore.utils.parse_ts('@m')
+        start = humiocore.utils.parse_ts(f'{span}@s')
+        end = humiocore.utils.parse_ts('@s')
 
         return client.streaming_search(query=query,
                                        repos=[self.env_config['repository']],
