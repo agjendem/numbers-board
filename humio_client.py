@@ -29,7 +29,7 @@ def run_search(callback):
                 and (last_result is None
                      or current_result["timestamp"] != last_result["timestamp"]):
             last_result = current_result
-            callback(last_result)
+            callback(last_result['result'])
 
         time.sleep(int(env_config['query_interval_seconds']))
 
