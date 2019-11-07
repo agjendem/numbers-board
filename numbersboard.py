@@ -13,7 +13,11 @@ def run_board(segments):
         segments.show(data)
 
     humio_client = HumioClient()
-    humio_client.run_search('query_last_transfer', humio_callback)
+    queries = ['query_accounts_created', 'query_payments', 'query_number_of_logins', 'query_gold_home']
+    while True:
+        for query in queries:
+            humio_client.run_search(query, humio_callback)
+            time.sleep(10)
 
 
 if __name__ == '__main__':

@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
 import humiocore
-import time
 import signal
 import sys
 
@@ -26,15 +25,12 @@ class HumioClient:
 
     def run_search(self, query_id, callback):
         last_result = None
-        while True:
-            current_result = next(self._fetch_result(query_id))
-            if len(current_result) != 0 \
-                    and (last_result is None
-                         or current_result != last_result):
-                last_result = current_result
-                callback(last_result['result'])
-
-            time.sleep(int(self.env_config[f'{query_id}_interval']))
+        current_result = next(self._fetch_result(query_id))
+        if len(current_result) != 0 \
+                and (last_result is None
+                     or current_result != last_result):
+            last_result = current_result
+            callback(last_result['result'])
 
 
 if __name__ == '__main__':
