@@ -31,7 +31,7 @@ def run_search(callback):
             last_result = current_result
             callback(last_result)
 
-        time.sleep(env_config['query_interval_seconds'])
+        time.sleep(int(env_config['query_interval_seconds']))
 
 
 if __name__ == '__main__':
