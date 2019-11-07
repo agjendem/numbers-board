@@ -5,33 +5,33 @@ import signal
 import sys
 
 
-def _fetch_last_transfer_search(env_config):
-    client = humiocore.HumioAPI(**env_config)
+class HumioClient:
+    def __init__(self):
+        self.env_config = humiocore.loadenv()
+        humiocore.setup_excellent_logging('INFO')
 
-    span = env_config['query_span']
-    start = humiocore.utils.parse_ts(f'{span}@m')
-    end = humiocore.utils.parse_ts('@m')
+    def _fetch_result(self, query, span):
+        client = humiocore.HumioAPI(token=self.env_config['token'], base_url=self.env_config['base_url'])
 
-    return client.streaming_search(query=env_config['query'],
-                                   repos=[env_config['repository']],
-                                   start=start,
-                                   end=end)
+        start = humiocore.utils.parse_ts(f'{span}@m')
+        end = humiocore.utils.parse_ts('@m')
 
+        return client.streaming_search(query=query,
+                                       repos=[self.env_config['repository']],
+                                       start=start,
+                                       end=end)
 
-def run_search(callback):
-    humiocore.setup_excellent_logging('INFO')
-    env_config = humiocore.loadenv()
+    def run_search(self, query_id, span, interval_seconds, callback):
+        last_result = None
+        while True:
+            current_result = next(self._fetch_result(self.env_config[query_id], span))
+            if len(current_result) != 0 \
+                    and (last_result is None
+                         or current_result != last_result):
+                last_result = current_result
+                callback(last_result['result'])
 
-    last_result = None
-    while True:
-        current_result = next(_fetch_last_transfer_search(env_config))
-        if len(current_result) != 0 \
-                and (last_result is None
-                     or current_result["timestamp"] != last_result["timestamp"]):
-            last_result = current_result
-            callback(last_result['result'])
-
-        time.sleep(int(env_config['query_interval_seconds']))
+            time.sleep(interval_seconds)
 
 
 if __name__ == '__main__':
@@ -43,4 +43,5 @@ if __name__ == '__main__':
 
     def humio_callback(data):
         print(data)
-    run_search(humio_callback)
+    humio_client = HumioClient()
+    humio_client.run_search('query_last_transfer', '-60m', 10, humio_callback)

@@ -3,15 +3,17 @@ import time
 import signal
 import sys
 from rpi_7segment import Segments
-from humio_client import run_search
+from humio_client import HumioClient
 
 
 def run_board(segments):
     def humio_callback(data):
         print(data)
+        segments.show("Siste")
         segments.show(data)
 
-    run_search(humio_callback)
+    humio_client = HumioClient()
+    humio_client.run_search('query_last_transfer', '-60m', 10, humio_callback)
 
 
 if __name__ == '__main__':
