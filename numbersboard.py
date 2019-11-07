@@ -15,7 +15,7 @@ def run_board(segments):
 
 
 if __name__ == '__main__':
-    _segments = Segments(offline=True)
+    _segments = Segments(offline=False)
 
     def signal_handler(sig, frame):
         # Cleanup if killed/interrupted:
