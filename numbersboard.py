@@ -13,7 +13,7 @@ def run_board(segments):
         segments.show(data)
 
     humio_client = HumioClient()
-    humio_client.run_search('query_last_transfer', '-60m', 10, humio_callback)
+    humio_client.run_search('query_last_transfer', humio_callback)
 
 
 if __name__ == '__main__':

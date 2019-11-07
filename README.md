@@ -3,8 +3,10 @@ Create environment variables, or put your config into ~/.config/humio/.env
 ```
 HUMIO_BASE_URL=https://xxxxxxxxxxxxxxxxxxxxxxxxxx
 HUMIO_TOKEN=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-HUMIO_REPOSITORY=xxxxxxxxxxxxxxxxxxxxxx
-HUMIO_QUERY_XXX='"request_type" = "xxxxxxxxxx"'
+HUMIO_QUERY_1_XXX='"request_type" = "xxxxxxxxxx"'
+HUMIO_QUERY_1_XXX_REPOSITORY='xxxxxx'
+HUMIO_QUERY_1_XXX_SPAN='-60m'
+HUMIO_QUERY_1_XXX_INTERVAL=10
 ```
 
 Install requirements / Setup virtualenv:
