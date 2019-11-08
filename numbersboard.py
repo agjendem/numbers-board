@@ -1,5 +1,4 @@
 #!/usr/bin/env python3
-import time
 import signal
 import sys
 from rpi_7segment import Segments
@@ -15,11 +14,8 @@ def run_board(segments, ledstrip):
         ledstrip.color(c[0], c[1], c[2], c[3])
 
     humio_client = HumioClient()
-    queries = ['query_accounts_created', 'query_payments', 'query_number_of_logins', 'query_gold_home']
     while True:
-        for query in queries:
-            humio_client.run_search(query, humio_callback)
-            time.sleep(10)
+        humio_client.run_all(humio_callback)
 
 
 if __name__ == '__main__':

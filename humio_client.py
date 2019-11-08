@@ -2,6 +2,7 @@
 import humiocore
 import signal
 import sys
+import time
 
 
 class HumioClient:
@@ -31,6 +32,12 @@ class HumioClient:
                      or current_result != last_result):
             last_result = current_result
             callback(last_result['result'], self.env_config[f'{query_id}_color'])
+
+    def run_all(self, callback):
+        queries = [key.replace('_repository', '') for key in self.env_config.keys() if key.endswith('_repository')]
+        for query in queries:
+            self.run_search(query, callback)
+            time.sleep(10)
 
 
 if __name__ == '__main__':
