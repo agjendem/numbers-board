@@ -6,7 +6,7 @@ from rpi_ws281x import PixelStrip, Color
 class LedStrip:
     def __init__(self):
         # LED strip configuration:
-        self.LED_COUNT      = 60      # Number of LED pixels.
+        self.LED_COUNT      = 58      # Number of LED pixels.
         self.LED_PIN        = 18      # GPIO pin connected to the pixels (18 uses PWM!).
         self.LED_FREQ_HZ    = 800000  # LED signal frequency in hertz (usually 800khz)
         self.LED_DMA        = 10      # DMA channel to use for generating signal (try 10)
@@ -23,17 +23,26 @@ class LedStrip:
                                 self.LED_CHANNEL)
         self.strip.begin()
 
-    def color(self, color, wait_ms=50):
+    def _color(self, color, wait_ms=50):
         for i in range(self.strip.numPixels()):
             self.strip.setPixelColor(i, color)
             self.strip.show()
             time.sleep(wait_ms/1000.0)
 
+    def color(self, r, g, b, w, wait_ms=50):
+        for i in range(self.strip.numPixels()):
+            self.strip.setPixelColor(i, Color(r, g, b, w))
+            self.strip.show()
+            time.sleep(wait_ms/1000.0)
+
     def all_red(self):
-        self.color(Color(255, 0, 0))
+        self._color(Color(255, 0, 0))
 
     def all_green(self):
-        self.color(Color(0, 255, 0))
+        self._color(Color(0, 255, 0))
 
     def all_blue(self):
-        self.color(Color(0, 0, 255))
+        self._color(Color(0, 0, 255))
+
+    def all_white(self):
+        self._color(Color(0, 0, 0, 255))

@@ -30,7 +30,7 @@ class HumioClient:
                 and (last_result is None
                      or current_result != last_result):
             last_result = current_result
-            callback(last_result['result'])
+            callback(last_result['result'], self.env_config[f'{query_id}_color'])
 
 
 if __name__ == '__main__':

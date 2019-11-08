@@ -8,11 +8,11 @@ from humio_client import HumioClient
 
 
 def run_board(segments, ledstrip):
-    def humio_callback(data):
+    def humio_callback(data, color):
+        c = color.split(',')
         print(data)
-        ledstrip.all_blue()
         segments.show(data)
-        ledstrip.all_red()
+        ledstrip.color(c[0], c[1], c[2], c[3])
 
     humio_client = HumioClient()
     queries = ['query_accounts_created', 'query_payments', 'query_number_of_logins', 'query_gold_home']
@@ -25,6 +25,7 @@ def run_board(segments, ledstrip):
 if __name__ == '__main__':
     _segments = Segments(offline=False)
     _ledstrip = LedStrip()
+    _ledstrip.all_white()
 
     def signal_handler(sig, frame):
         # Cleanup if killed/interrupted:
