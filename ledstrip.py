@@ -29,7 +29,7 @@ class LedStrip:
             self.strip.show()
             time.sleep(wait_ms/1000.0)
 
-    def color(self, r, g, b, w, wait_ms=50):
+    def color(self, r: int, g: int, b: int, w: int, wait_ms=50):
         for i in range(self.strip.numPixels()):
             self.strip.setPixelColor(i, Color(r, g, b, w))
             self.strip.show()

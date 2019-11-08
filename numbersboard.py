@@ -8,10 +8,11 @@ from humio_client import HumioClient
 
 def run_board(segments, ledstrip):
     def humio_callback(data, color):
-        c = color.split(',')
         print(data)
-        segments.show(data)
-        ledstrip.color(c[0], c[1], c[2], c[3])
+        segments.show(f'{data:>7}')  # Hack: Right align as there's a bug in the display library for numbers, currently
+
+        c = color.split(',')
+        ledstrip.color(int(c[0]), int(c[1]), int(c[2]), int(c[3]))
 
     humio_client = HumioClient()
     while True:
