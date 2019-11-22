@@ -17,6 +17,9 @@ source venv/bin/activate
 pip3 install -r requirements.txt
 
 ./numbersboard.py
+or
+./numbersboard.py --help
+
 ```
 
 # Hardware
