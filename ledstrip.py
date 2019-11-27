@@ -46,3 +46,6 @@ class LedStrip:
 
     def all_white(self):
         self._color(Color(0, 0, 0, 255))
+
+    def all_off(self):
+        self._color(Color(0, 0, 0, 0))

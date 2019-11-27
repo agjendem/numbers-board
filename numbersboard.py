@@ -136,7 +136,12 @@ if __name__ == '__main__':
     def signal_handler(sig, frame):
         # Cleanup if killed/interrupted:
         if _segments is not None:
+            _segments.clear()
             _segments.shutdown()
+
+        if _ledstrip is not None:
+            _ledstrip.all_off()
+
         tl.stop()
         sys.exit(0)
 
