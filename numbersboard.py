@@ -67,6 +67,13 @@ def run_board(segments, ledstrip, timeloop, update_frequency):
     # Add all queries defined in ENV as timed jobs:
     for query in humio_client.get_queries():
         print(f'Query with id {query.get_query_id()} registered as background job with interval {query.get_interval()}s')
+
+        # Run query to populate cache with initial values:
+        execute_query(query=query,
+                      humio_client=humio_client,
+                      query_results=query_results)
+
+        # Add job that updates the query data whenever the specified interval has passed
         timeloop._add_job(execute_query,
                           query=query,
                           humio_client=humio_client,
