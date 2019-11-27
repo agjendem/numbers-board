@@ -98,30 +98,33 @@ if __name__ == '__main__':
 
     disable_hardware = False
     update_frequency = 15
+    led_brightness = 255
     name = sys.argv[0]
 
     try:
-        opts, args = getopt.getopt(sys.argv[1:], "hdu:", ["help", "disable-hardware", "update-frequency="])
+        opts, args = getopt.getopt(sys.argv[1:], "hdu:b:", ["help", "disable-hardware", "update-frequency=", "led-brightness="])
     except getopt.GetoptError:
-        print(f'{name} -d -u 15')
-        print(f'{name} --disable-hardware --update-frequency 15')
+        print(f'{name} -d -u 15 -b 255')
+        print(f'{name} --disable-hardware --update-frequency 15 led-brightness=255')
         sys.exit(2)
     for opt, arg in opts:
         if opt in ['-h', '--help']:
-            print(f'{name} -d -u 15')
-            print(f'{name} --disable-hardware --update-frequency 15')
+            print(f'{name} -d -u 15 -b 255')
+            print(f'{name} --disable-hardware --update-frequency 15 led-brightness=255')
             sys.exit()
         elif opt in ('-d', '--disable-hardware'):
             disable_hardware = True
         elif opt in ('-u', '--update-frequency'):
             update_frequency = int(arg)
+        elif opt in ('-b', '--led-brightness'):
+            led_brightness = int(arg)
 
     if disable_hardware:
         _segments = None
         _ledstrip = None
     else:
         _segments = Segments(offline=False)
-        _ledstrip = LedStrip()
+        _ledstrip = LedStrip(brightness=led_brightness)
 
     def signal_handler(sig, frame):
         # Cleanup if killed/interrupted:
