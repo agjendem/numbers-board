@@ -1,4 +1,4 @@
 rpi_ws281x==4.2.2
 rpi_7segment==0.0.1
 git+git://github.com/gwtwod/py3humiocore.git#egg=humiocore
-timeloop=1.0.2
+timeloop==1.0.2
