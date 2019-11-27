@@ -45,9 +45,9 @@ def update_visualizations(segments: Segments, ledstrip: LedStrip, query_results:
             if ledstrip is not None:
                 ledstrip.color(int(colors[0]), int(colors[1]), int(colors[2]), int(colors[3]))
 
-            # Hack: Right align as there's a bug in the display library for numbers, currently
-            print(f'Displaying "{cached_result}" on segments')
+            print(f'Displaying "{cached_result}" on segments for query {random_query.get_query_id()}')
             if segments is not None:
+                # Hack: Right align as there's a bug in the display library for numbers, currently
                 segments.show(f'{cached_result:>7}')
         else:
             print("There is currently no data to display")
